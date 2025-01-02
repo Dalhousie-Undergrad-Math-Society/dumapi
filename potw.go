@@ -11,14 +11,14 @@ import (
 
 
 type Body struct {
-	Name string `json:"name"`
-	Answer string `json:"answer"`
+	Name string `form:"email" binding:"required"`
+	Answer string `form:"answer" binding:"required"`
 }
 
 func submitAnswer(c *gin.Context) {
 	body := Body{}
 
-	if err := c.BindJSON(&body); err != nil {
+	if err := c.ShouldBind(&body); err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
